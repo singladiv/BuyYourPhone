@@ -1,0 +1,51 @@
+
+.mobile-list-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 200px;
+    padding: 16px;
+    background-color: pink; /* Adjust the background color as needed */
+  }
+  
+  .filter-container .MuiList-root {
+    width: 100%;
+  }
+  
+  .mobiles-list {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 16px;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .image-list-item {
+    width: 200px; /* Fixed width for Card */
+  }
+  
+  .image-list-item .MuiCard-root {
+    height: 300px; /* Fixed height for Card */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .image-list-item .MuiCardMedia-root {
+    height: 200px;
+  }
+  
+  .image-list-item .MuiCardContent-root {
+    padding: 16px;
+  }
+  
+  .image-list-item .MuiTypography-root {
+    margin-bottom: 8px;
+  }
+  
+  .image-list-item .MuiCardActions-root {
+    justify-content: flex-end;
+  }
+  
