@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -103,6 +104,17 @@ function Landing() {
             ))}
         </ImageList>
       </div>
+=======
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Appbar from '../Components/Appbar'
+const Landing = () => {
+  return (
+    <div>
+        {/* <Appbar/> */}
+      <h1>Welcome to Landing Page</h1>
+        <Link to="/device-description">Next</Link>
+>>>>>>> Stashed changes
     </div>
   );
 }
