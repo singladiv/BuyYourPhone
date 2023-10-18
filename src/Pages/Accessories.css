@@ -1,0 +1,58 @@
+
+/* Container for the Accessories page */
+.accessories-container {
+    padding: 20px;
+  }
+  
+  /* Header style */
+  .accessories-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* ImageList style */
+  .image-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 16px;
+  }
+  
+  /* Individual ImageListItem style */
+  .image-list-item {
+    flex: 0 0 auto;
+    width: 250px; /* Adjust the width as needed */
+  }
+  
+  /* Card style */
+  .card {
+    width: 100%;
+  }
+  
+  /* CardMedia style (for the accessory image) */
+  .card-media {
+    height: 140px;
+  }
+  
+  /* CardContent style */
+  .card-content {
+    padding: 16px;
+  }
+  
+  /* Typography style for the accessory name */
+  .accessory-name {
+    font-size: 18px;
+  }
+  
+  /* Typography style for the accessory price */
+  .accessory-price {
+    font-size: 16px;
+    color: #007BFF; /* Adjust the color as needed */
+  }
+  
+  /* Typography style for the accessory description */
+  .accessory-description {
+    font-size: 14px;
+    color: #666;
+  }
+  

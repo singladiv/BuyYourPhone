@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -11,6 +12,7 @@ import {
 import "./Description.css"; 
 
 const DeviceDetails = () => {
+  const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [pinCode, setPinCode] = useState("");
@@ -174,9 +176,15 @@ const DeviceDetails = () => {
                 </Typography>
               )}
             </Typography>  
-            <Button variant="contained" color="primary" className="nextButton" href="/acessories">
-              Next
-            </Button>
+            <Button
+  variant="contained"
+  color="primary"
+  className="nextButton"
+  component={Link} // Use Link to navigate
+  to={`/accessories`} // Pass selectedBrand as a route parameter
+>
+  Next
+</Button>
           </CardContent>
         </Grid>
       </Grid>

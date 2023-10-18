@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddressDetails from "./Pages/AddressDetails";
 import OrderSummary from "./Pages/OrderSummary";
 import AcessoriesDescription from "./Pages/AcessoriesDescription";
-import Acessories from "./Pages/Acessories";
+import Accessories from "./Pages/Accessories";
 import DeviceDescription from "./Pages/DeviceDescription";
 import Landing from "./Pages/Landing";
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing/>}/>
         <Route path="/device-description" element={<DeviceDescription/>}/>
-        <Route path="/acessories" element={<Acessories/>}/>
+        <Route path="/accessories" element={<Accessories/>}/>
         <Route path="/acessories-description" element={<AcessoriesDescription/>}/>
         <Route path="/order-summary" element={<OrderSummary/>}/>
         <Route path="/address-details" element={<AddressDetails/>}/>

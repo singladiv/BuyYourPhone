@@ -13,7 +13,7 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
-import './Landing.css'; 
+import './Landing.css';
 
 function Landing() {
   const [mobiles, setMobiles] = useState([]);
@@ -21,8 +21,18 @@ function Landing() {
 
   useEffect(() => {
     axios
-      .get('https://mocki.io/v1/8d9c7949-de39-43f9-85c0-2f35f63727f7')
-      .then((response) => setMobiles(response.data))
+      .get('http://localhost:8080/api/products')
+      .then((response) => {
+        const modifiedData = response.data.map((product) => ({
+          id: product.id,
+          brand: product.brand,
+          model: product.model,
+          price: product.price,
+          image: product.image,
+        }));
+        console.log('Modified data:', modifiedData);
+        setMobiles(modifiedData);
+      })
       .catch((error) => console.error(error));
   }, []);
 
@@ -62,12 +72,14 @@ function Landing() {
           >
             <ListItemText primary="Google" />
           </ListItem>
+          {/* Add more brand filter options as needed */}
         </List>
       </div>
       <div className="mobiles-list">
         <ImageList cols={3} gap={40}>
           {mobiles
             .filter((mobile) => !brandFilter || mobile.brand === brandFilter)
+            .filter((item,index,array)=>array.findIndex((obj)=>obj.model===item.model)===index)
             .map((mobile) => (
               <ImageListItem key={mobile.id} className="image-list-item">
                 <Link to={`/device-description`}>
@@ -77,7 +89,7 @@ function Landing() {
                         component="img"
                         alt={mobile.brand}
                         height="200px"
-                        image={mobile.imageUrl}
+                        image={mobile.image}
                         title={mobile.model}
                       />
                       <CardContent>
@@ -92,11 +104,6 @@ function Landing() {
                         </Typography>
                       </CardContent>
                     </CardActionArea>
-                    {/* <CardActions>
-                      <Button size="small" color="primary">
-                        View More
-                      </Button>
-                    </CardActions> */}
                   </Card>
                 </Link>
               </ImageListItem>
