@@ -8,7 +8,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import "./Description.css"; 
+import { useParams } from "react-router-dom";
+import "./Description.css";
 
 const DeviceDetails = () => {
   const [selectedColor, setSelectedColor] = useState("");
@@ -21,38 +22,58 @@ const DeviceDetails = () => {
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
 
+  const { brand, model } = useParams();
+  // console.log(brand);
+
+  
+  
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://mocki.io/v1/8a0c7af5-21a5-4206-9d4b-d170bdd8f4dc"
-        );
-        const jsonData = await response.json();
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/products/byBrandAndModel?brand=${brand}&model=${model}`
+      );
+      const jsonData = await response.json();
 
-        // Extract unique colors and sizes
-        const uniqueColors = Array.from(
-          new Set(jsonData.map((variant) => variant.color))
-        );
-        const uniqueSizes = Array.from(
-          new Set(jsonData.map((variant) => variant.size))
-        );
-
-        // Set initial values based on the first variant
+      // Ensure that the data is an array and not empty
+      if (Array.isArray(jsonData) && jsonData.length > 0) {
         const initialVariant = jsonData[0];
-        setSelectedVariant(initialVariant);
-        setSelectedColor(initialVariant.color);
-        setSelectedSize(initialVariant.size);
-        setPrice(initialVariant.price);
-        setColors(uniqueColors); 
-        setSizes(uniqueSizes); // Show only the first two sizes
-        setData(jsonData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
-    fetchData();
-  }, []);
+        // Ensure that the necessary properties are available
+        if (
+          initialVariant &&
+          initialVariant.color !== undefined &&
+          initialVariant.size !== undefined
+        ) {
+          setSelectedVariant(initialVariant);
+          setSelectedColor(initialVariant.color);
+          setSelectedSize(initialVariant.size);
+          setPrice(initialVariant.price);
+
+          const uniqueColors = Array.from(
+            new Set(jsonData.map((variant) => variant.color))
+          );
+          const uniqueSizes = Array.from(
+            new Set(jsonData.map((variant) => variant.size))
+          );
+
+          setColors(uniqueColors);
+          setSizes(uniqueSizes); // Show only the first two sizes
+          setData(jsonData);
+        } else {
+          console.error("Data format is incorrect:", jsonData);
+        }
+      } else {
+        console.error("Empty or invalid data:", jsonData);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, [brand, model]);
 
   const handleColorSelection = (color) => {
     const selectedVariant = data.find(
@@ -117,7 +138,7 @@ const DeviceDetails = () => {
                   <Button
                     key={color}
                     onClick={() => handleColorSelection(color)}
-                    variant={selectedColor === color ? "contained" : "outlined"}  
+                    variant={selectedColor === color ? "contained" : "outlined"}
                     color="secondary"
                     sx={{ ml: "1rem" }}
                   >
@@ -134,7 +155,7 @@ const DeviceDetails = () => {
               {selectedVariant &&
                 sizes.map((size) => (
                   <Button
-                  sx={{ ml: "1rem" }}
+                    sx={{ ml: "1rem" }}
                     key={size}
                     onClick={() => handleSizeSelection(size)}
                     variant={selectedSize === size ? "contained" : "outlined"}
@@ -173,8 +194,13 @@ const DeviceDetails = () => {
                     : "Mobile not available at this location"}
                 </Typography>
               )}
-            </Typography>  
-            <Button variant="contained" color="primary" className="nextButton" href="/acessories">
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              className="nextButton"
+              href="/acessories"
+            >
               Next
             </Button>
           </CardContent>

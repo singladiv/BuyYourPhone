@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardActionArea,
@@ -12,16 +12,16 @@ import {
   List,
   ListItem,
   ListItemText,
-} from '@mui/material';
-import './Landing.css'; 
+} from "@mui/material";
+import "./Landing.css";
 
 function Landing() {
   const [mobiles, setMobiles] = useState([]);
-  const [brandFilter, setBrandFilter] = useState('');
+  const [brandFilter, setBrandFilter] = useState("");
 
   useEffect(() => {
     axios
-      .get('https://mocki.io/v1/8d9c7949-de39-43f9-85c0-2f35f63727f7')
+      .get("http://localhost:8080/api/products")
       .then((response) => setMobiles(response.data))
       .catch((error) => console.error(error));
   }, []);
@@ -36,29 +36,29 @@ function Landing() {
         <List component="nav" aria-label="brand filter">
           <ListItem
             button
-            onClick={() => handleFilter('')}
-            selected={brandFilter === ''}
+            onClick={() => handleFilter("")}
+            selected={brandFilter === ""}
           >
             <ListItemText primary="All" />
           </ListItem>
           <ListItem
             button
-            onClick={() => handleFilter('Apple')}
-            selected={brandFilter === 'Apple'}
+            onClick={() => handleFilter("Apple")}
+            selected={brandFilter === "Apple"}
           >
             <ListItemText primary="Apple" />
           </ListItem>
           <ListItem
             button
-            onClick={() => handleFilter('Samsung')}
-            selected={brandFilter === 'Samsung'}
+            onClick={() => handleFilter("Samsung")}
+            selected={brandFilter === "Samsung"}
           >
             <ListItemText primary="Samsung" />
           </ListItem>
           <ListItem
             button
-            onClick={() => handleFilter('Google')}
-            selected={brandFilter === 'Google'}
+            onClick={() => handleFilter("Google")}
+            selected={brandFilter === "Google"}
           >
             <ListItemText primary="Google" />
           </ListItem>
@@ -68,9 +68,13 @@ function Landing() {
         <ImageList cols={3} gap={40}>
           {mobiles
             .filter((mobile) => !brandFilter || mobile.brand === brandFilter)
+            .filter(
+              (item, index, array) =>
+                array.findIndex((obj) => obj.model === item.model) === index
+            )
             .map((mobile) => (
               <ImageListItem key={mobile.id} className="image-list-item">
-                <Link to={`/device-description`}>
+                <Link to={`/device-details/${encodeURIComponent(mobile.brand)}/${encodeURIComponent(mobile.model)}`}>
                   <Card>
                     <CardActionArea>
                       <CardMedia
