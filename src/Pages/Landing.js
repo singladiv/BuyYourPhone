@@ -74,7 +74,11 @@ function Landing() {
             )
             .map((mobile) => (
               <ImageListItem key={mobile.id} className="image-list-item">
-                <Link to={`/device-details/${encodeURIComponent(mobile.brand)}/${encodeURIComponent(mobile.model)}`}>
+                <Link
+                  to={`/device-details/${encodeURIComponent(
+                    mobile.brand
+                  )}/${encodeURIComponent(mobile.model)}`}
+                >
                   <Card>
                     <CardActionArea>
                       <CardMedia

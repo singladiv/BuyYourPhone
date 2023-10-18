@@ -8,6 +8,7 @@ import DeviceDetails from "./Pages/DeviceDetails";
 import Landing from "./Pages/Landing";
 function App() {
   return (
+   
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing/>}/>
@@ -18,6 +19,7 @@ function App() {
         <Route path="/address-details" element={<AddressDetails/>}/>
       </Routes>
     </BrowserRouter>
+   
   );
 }
 

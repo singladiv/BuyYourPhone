@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import NewContainer from '../Components/NewContainer'
+import NewCard from '../Components/NewCard'
+
 const OrderSummary = () => {
   return (
-    <div>
-      <h1>Your Order Summary is: </h1>
-      <Link to="/address-details">Proceed Further</Link>
+    <div className='overflow-hidden'>
+      <NewContainer title={'Your Order'}/>
+      
     </div>
   )
 }
