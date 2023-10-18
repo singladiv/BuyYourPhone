@@ -1,0 +1,49 @@
+/* Container for accessories */
+.accessories-container {
+    padding: 20px;
+  }
+  
+  /* Heading style */
+  .accessories-heading {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for each accessory item */
+  .accessory-card {
+    width: 300px;
+    margin: 10px;
+  }
+  
+  /* Media (Image) style */
+  .accessory-image {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  /* Card content style */
+  .accessory-content {
+    text-align: center;
+  }
+  
+  /* Price text style */
+  .accessory-price {
+    font-weight: bold;
+    color: #007BFF; /* Blue color */
+  }
+  
+  /* Link style for accessory cards */
+  .accessory-link {
+    text-decoration: none;
+    color: inherit; /* Inherit text color */
+    transition: transform 0.2s;
+  }
+  
+  /* Add hover effect to accessory links */
+  .accessory-link:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  
+  

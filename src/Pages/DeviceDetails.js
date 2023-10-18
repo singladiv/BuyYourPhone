@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -8,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Description.css";
 
 const DeviceDetails = () => {
@@ -16,64 +17,106 @@ const DeviceDetails = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [pinCode, setPinCode] = useState("");
   const [price, setPrice] = useState(null);
-  const [locationAvailability, setLocationAvailability] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [data, setData] = useState([]);
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
+  const [expectedDays, setExpectedDays] = useState(null);
+
+  const [warehouses, setWarehouses] = useState([]);
+  const [pinCodeDistance, setPinCodeDistance] = useState({});
 
   const { brand, model } = useParams();
-  // console.log(brand);
-
-  
-  
 
   useEffect(() => {
-  const fetchData = async () => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/products/byBrandAndModel?brand=${brand}&model=${model}`
+        );
+        const jsonData = await response.json();
+
+        if (Array.isArray(jsonData) && jsonData.length > 0) {
+          const initialVariant = jsonData[0];
+
+          if (
+            initialVariant &&
+            initialVariant.color !== undefined &&
+            initialVariant.size !== undefined
+          ) {
+            setSelectedVariant(initialVariant);
+            setSelectedColor(initialVariant.color);
+            setSelectedSize(initialVariant.size);
+            setPrice(initialVariant.price);
+
+            const uniqueColors = Array.from(
+              new Set(jsonData.map((variant) => variant.color))
+            );
+            const uniqueSizes = Array.from(
+              new Set(jsonData.map((variant) => variant.size))
+            );
+
+            setColors(uniqueColors);
+            setSizes(uniqueSizes);
+            setData(jsonData);
+          } else {
+            console.error("Data format is incorrect:", jsonData);
+          }
+        } else {
+          console.error("Empty or invalid data:", jsonData);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [brand, model]);
+
+  useEffect(() => {
+    const fetchWarehouses = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/warehouses");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setWarehouses(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchWarehouses();
+  }, []);
+
+  const calculateDistance = async (origin, destination) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/products/byBrandAndModel?brand=${brand}&model=${model}`
-      );
-      const jsonData = await response.json();
-
-      // Ensure that the data is an array and not empty
-      if (Array.isArray(jsonData) && jsonData.length > 0) {
-        const initialVariant = jsonData[0];
-
-        // Ensure that the necessary properties are available
-        if (
-          initialVariant &&
-          initialVariant.color !== undefined &&
-          initialVariant.size !== undefined
-        ) {
-          setSelectedVariant(initialVariant);
-          setSelectedColor(initialVariant.color);
-          setSelectedSize(initialVariant.size);
-          setPrice(initialVariant.price);
-
-          const uniqueColors = Array.from(
-            new Set(jsonData.map((variant) => variant.color))
-          );
-          const uniqueSizes = Array.from(
-            new Set(jsonData.map((variant) => variant.size))
-          );
-
-          setColors(uniqueColors);
-          setSizes(uniqueSizes); // Show only the first two sizes
-          setData(jsonData);
-        } else {
-          console.error("Data format is incorrect:", jsonData);
+        `https://distanceto.p.rapidapi.com/get?route=[{"t": "${origin}"}, {"t": "${destination}"}]&car=false`,
+        {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key":
+              "cab73d02famsh15196a44547fd1bp1824ffjsn3068e5d65a9c",
+            "X-RapidAPI-Host": "distanceto.p.rapidapi.com",
+          },
         }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const distance = data.steps[0].distance.haversine;
+        return distance;
       } else {
-        console.error("Empty or invalid data:", jsonData);
+        console.error("Error:", response.status, response.statusText);
+        return null;
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      return null;
     }
   };
-
-  fetchData();
-}, [brand, model]);
 
   const handleColorSelection = (color) => {
     const selectedVariant = data.find(
@@ -101,10 +144,50 @@ const DeviceDetails = () => {
     }
   };
 
-  const handlePinCodeCheck = () => {
-    // Perform API call to check mobile availability at the entered pin code
-    // Update locationAvailability state based on API response
-    // You may also want to update the price based on the location
+  const handlePinCodeCheck = async () => {
+    const enteredPinCode = pinCode;
+
+    if (warehouses.length === 0) {
+      // If there are no warehouses, show that the product is out of stock
+      console.log("Product is out of stock.");
+      setExpectedDays(null);
+      return;
+    }
+
+    let shortestDistance = Infinity;
+    let calculatedDays = 7; // Default value if no warehouses are available
+
+    // Set loading state while calculating distances
+    setExpectedDays("loading");
+
+    try {
+      for (const warehouse of warehouses) {
+        const distance = await calculateDistance(
+          enteredPinCode,
+          warehouse.location
+        );
+
+        if (distance !== null && distance < shortestDistance) {
+          shortestDistance = distance;
+        }
+      }
+
+      // Calculate expected delivery days based on the shortest distance
+      if (shortestDistance < 300) {
+        calculatedDays = 2;
+      } else if (shortestDistance < 500) {
+        calculatedDays = 3;
+      } else if (shortestDistance < 800) {
+        calculatedDays = 4;
+      } else if (shortestDistance < 11000) {
+        calculatedDays = 5;
+      }
+    } catch (error) {
+      console.error("Error calculating distances:", error);
+    }
+
+    // Update the state with the calculated result
+    setExpectedDays(calculatedDays);
   };
 
   return (
@@ -187,11 +270,19 @@ const DeviceDetails = () => {
               <Button onClick={handlePinCodeCheck} size="large">
                 Check Availability
               </Button>
-              {locationAvailability == null && (
+              {expectedDays === "loading" && (
                 <Typography variant="h6" color="text.primary">
-                  {locationAvailability
-                    ? "Device will be delivered within {n} days "
-                    : "Mobile not available at this location"}
+                  Checking availability...
+                </Typography>
+              )}
+              {expectedDays !== null && expectedDays !== "loading" && (
+                <Typography variant="h6" color="#49be25">
+                  Expected Delivery: {expectedDays} days
+                </Typography>
+              )}
+              {expectedDays === null && (
+                <Typography variant="h6" color="error">
+                  Product is out of stock.
                 </Typography>
               )}
             </Typography>
@@ -199,7 +290,8 @@ const DeviceDetails = () => {
               variant="contained"
               color="primary"
               className="nextButton"
-              href="/acessories"
+              component={Link}
+              to={`/accessories/${brand}`}
             >
               Next
             </Button>
