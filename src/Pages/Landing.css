@@ -6,7 +6,7 @@
   .sidebar {
     width: 200px;
     padding: 16px;
-    background-color: pink; /* Adjust the background color as needed */
+    background-color:pink; /* Adjust the background color as needed */
   }
   
   .filter-container .MuiList-root {
@@ -42,7 +42,7 @@
   }
   
   .image-list-item .MuiTypography-root {
-    margin-bottom: 8px;
+    margin-bottom: 5px;
   }
   
   .image-list-item .MuiCardActions-root {

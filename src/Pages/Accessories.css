@@ -1,58 +1,46 @@
-
-/* Container for the Accessories page */
+/* Container for accessories */
 .accessories-container {
-    padding: 20px;
-  }
-  
-  /* Header style */
-  .accessories-header {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  /* ImageList style */
-  .image-list {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 16px;
-  }
-  
-  /* Individual ImageListItem style */
-  .image-list-item {
-    flex: 0 0 auto;
-    width: 250px; /* Adjust the width as needed */
-  }
-  
-  /* Card style */
-  .card {
-    width: 100%;
-  }
-  
-  /* CardMedia style (for the accessory image) */
-  .card-media {
-    height: 140px;
-  }
-  
-  /* CardContent style */
-  .card-content {
-    padding: 16px;
-  }
-  
-  /* Typography style for the accessory name */
-  .accessory-name {
-    font-size: 18px;
-  }
-  
-  /* Typography style for the accessory price */
-  .accessory-price {
-    font-size: 16px;
-    color: #007BFF; /* Adjust the color as needed */
-  }
-  
-  /* Typography style for the accessory description */
-  .accessory-description {
-    font-size: 14px;
-    color: #666;
-  }
-  
+  padding: 20px;
+}
+
+/* Heading style */
+.accessories-heading {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Style for each accessory item */
+.accessory-card {
+  width: 300px;
+  margin: 10px;
+}
+
+/* Media (Image) style */
+.accessory-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Card content style */
+.accessory-content {
+  text-align: center;
+}
+
+/* Price text style */
+.accessory-price {
+  font-weight: bold;
+  color: #007BFF; /* Blue color */
+}
+
+/* Link style for accessory cards */
+.accessory-link {
+  text-decoration: none;
+  color: inherit; /* Inherit text color */
+  transition: transform 0.2s;
+}
+
+/* Add hover effect to accessory links */
+.accessory-link:hover {
+  transform: scale(1.05); /* Scale up on hover */
+}

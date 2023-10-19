@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
   Card,
@@ -13,14 +14,14 @@ import { useParams } from 'react-router-dom';
 import './Accessories.css';
 
 const Accessories = () => {
-  const { selectedBrand } = useParams();
   const [accessories, setAccessories] = useState([]);
+  const { brand } = useParams();
 
   useEffect(() => {
     // Fetch accessory data from your API
     const fetchAccessories = async () => {
       try {
-        const response = await axios.get('https://mocki.io/v1/654f23c6-f657-4ba2-8312-b873c410b4ce');
+        const response = await axios.get('http://localhost:8080/api/products/accessories');
         setAccessories(response.data);
       } catch (error) {
         console.error('Error fetching accessory data:', error);
@@ -30,35 +31,37 @@ const Accessories = () => {
     fetchAccessories();
   }, []);
 
-  const filteredAccessories = accessories.filter((accessory) => accessory.brand === selectedBrand);
+  const filteredAccessories = accessories.filter((accessory) => accessory.brand === brand);
 
   return (
-    <div>
-      <h1>Accessories for {selectedBrand}</h1>
+    <div className="accessories-container">
+      <h1 className="accessories-heading">Accessories for {brand}</h1>
       <ImageList cols={3} gap={16}>
         {filteredAccessories.map((accessory) => (
           <ImageListItem key={accessory.id}>
-            <Card>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  alt={accessory.name}
-                  height="140"
-                  image={accessory.imageUrl}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {accessory.name}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Price: ${accessory.price}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {accessory.description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+            <Link to={`/accessories-description`} className="accessory-link">
+              <Card className="accessory-card">
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt={accessory.name}
+                    className="accessory-image"
+                    image={accessory.image}
+                  />
+                  <CardContent className="accessory-content">
+                    <Typography gutterBottom variant="h6" component="div">
+                      {accessory.brand}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {accessory.model}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" className="accessory-price">
+                      Price: Rs.{accessory.price}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Link>
           </ImageListItem>
         ))}
       </ImageList>
@@ -67,4 +70,3 @@ const Accessories = () => {
 };
 
 export default Accessories;
-

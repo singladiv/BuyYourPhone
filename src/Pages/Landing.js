@@ -21,7 +21,7 @@ function Landing() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/products")
+      .get("http://localhost:8080/api/products/mobile")
       .then((response) => setMobiles(response.data))
       .catch((error) => console.error(error));
   }, []);
@@ -62,7 +62,6 @@ function Landing() {
           >
             <ListItemText primary="Google" />
           </ListItem>
-          {/* Add more brand filter options as needed */}
         </List>
       </div>
       <div className="mobiles-list">
@@ -76,9 +75,9 @@ function Landing() {
             .map((mobile) => (
               <ImageListItem key={mobile.id} className="image-list-item">
                 <Link
-                  to={`/device-details/${encodeURIComponent(
+                  to={`/device-details/${
                     mobile.brand
-                  )}/${encodeURIComponent(mobile.model)}`}
+                  }/${mobile.model}`}
                 >
                   <Card>
                     <CardActionArea>

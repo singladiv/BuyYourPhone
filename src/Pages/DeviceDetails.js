@@ -25,7 +25,7 @@ const DeviceDetails = () => {
   const [sizes, setSizes] = useState([]);
 
   const { brand, model } = useParams();
-  // console.log(brand);
+  console.log(brand);
 
   
   
@@ -201,8 +201,10 @@ const DeviceDetails = () => {
   variant="contained"
   color="primary"
   className="nextButton"
-  component={Link} // Use Link to navigate
-  to={`/accessories`} // Pass selectedBrand as a route parameter
+  component={Link
+  }to={`/accessories/${
+      brand
+    }`}
 >
   Next
 </Button>
