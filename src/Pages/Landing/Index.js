@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Newappbar from "../Components/Newappbar";
+
+
 import {
   Card,
   CardActionArea,
@@ -31,11 +34,18 @@ function Landing() {
   };
 
   return (
+    <>
+      <Newappbar/>
     <div className="mobile-list-container">
+<<<<<<< Updated upstream:src/Pages/Landing/Index.js
 
 
       <div className="filter-container">
         <List component="nav" aria-label="brand filter" className="horizontal-filter">
+=======
+      <div className="w-48 bg-red-400 text-white text-bold mx-1 my-1 h-96 overflow-none">
+        <List component="nav" aria-label="brand filter">
+>>>>>>> Stashed changes:src/Pages/Landing.js
           <ListItem
             button
             onClick={() => handleFilter("")}
@@ -112,6 +122,7 @@ function Landing() {
         </ImageList>
       </div>
     </div>
+    </>
   );
 }
 

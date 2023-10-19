@@ -1,27 +1,17 @@
-<<<<<<< Updated upstream:src/Components/NewContainer/Index.js
-import React, { useState, useEffect } from "react";
-import NewCard from "../NewCard";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import "./Index.css";
-const Base_url = "http://localhost:8080/api/buyphone";
-=======
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import NewCard from './NewCard'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import IdContext from '../Context/IdContext';
 
 const Base_url = "http://localhost:8080/api/buyphone"
->>>>>>> Stashed changes:src/Components/NewContainer.js
 
-const NewContainer = (props) => {
+const NewContainer = () => {
   const [data, setData] = useState([]);
-
-  // todo
-  // const{id} = useParams();
+  const a = useContext(IdContext);
 
   useEffect(() => {
-    const result = axios.get(Base_url + "/getOrder/2").then((result) => {
+    const result = axios.get(Base_url + `/getOrder/${a.id}`).then((result) => {
       setData(result.data);
       console.log(result.data);
     });
@@ -29,7 +19,7 @@ const NewContainer = (props) => {
   return (
     <>
       <div className='container mx-auto my-12 w-1/3  h-3/4  bg-red-400  shadow-2xl shadow-black px-7 py-7 rounded-xl overflow-hidden'>
-        <h1 className='text-6xl  py-5'>{props.title}</h1>
+        <h1 className='text-6xl  py-5'>Order Summary</h1>
           <NewCard image={data.deviceImg} title={data.deviceName} variant={data.deviceVariant} deltime={data.deviceDlvTime} price={data.devicePrice} />
           
           <NewCard image={data.accessoryImg} title={data.accessoryName}  deltime={data.accessoryDlvTime} price={data.accessoryPrice} />
@@ -51,7 +41,7 @@ const NewContainer = (props) => {
                 </h1>
               </td>
             </tr>
-            {/* border-black border-solid border-2 */}
+           
           </tbody>
         </table>
 
