@@ -13,7 +13,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import "./Landing.css";
+import "./Index.css";
 
 function Landing() {
   const [mobiles, setMobiles] = useState([]);
@@ -81,6 +81,7 @@ function Landing() {
                 >
                   <Card>
                     <CardActionArea>
+                    <div className="image-background">
                       <CardMedia
                         component="img"
                         alt={mobile.brand}
@@ -88,6 +89,7 @@ function Landing() {
                         image={mobile.image}
                         title={mobile.model}
                       />
+                      </div>
                       <CardContent>
                         <Typography gutterBottom variant="h6" component="div">
                           {mobile.brand}

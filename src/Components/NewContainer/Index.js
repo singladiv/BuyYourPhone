@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import NewCard from "./NewCard";
+import NewCard from "../NewCard";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./newcontainer.css";
+import "./Index.css";
 const Base_url = "http://localhost:8080/api/buyphone";
 
 const NewContainer = (props) => {

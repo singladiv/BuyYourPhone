@@ -6,7 +6,7 @@
   .sidebar {
     width: 200px;
     padding: 16px;
-    background-color:pink; /* Adjust the background color as needed */
+    background-color:pink; 
   }
   
   .filter-container .MuiList-root {
@@ -35,7 +35,10 @@
   
   .image-list-item .MuiCardMedia-root {
     height: 200px;
+    background-color: white;
   }
+
+
   
   .image-list-item .MuiCardContent-root {
     padding: 16px;
