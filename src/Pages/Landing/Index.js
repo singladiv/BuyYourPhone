@@ -32,8 +32,10 @@ function Landing() {
 
   return (
     <div className="mobile-list-container">
-      <div className="sidebar">
-        <List component="nav" aria-label="brand filter">
+
+
+      <div className="filter-container">
+        <List component="nav" aria-label="brand filter" className="horizontal-filter">
           <ListItem
             button
             onClick={() => handleFilter("")}
@@ -64,8 +66,9 @@ function Landing() {
           </ListItem>
         </List>
       </div>
+
       <div className="mobiles-list">
-        <ImageList cols={3} gap={40}>
+        <ImageList cols={4} gap={40}>
           {mobiles
             .filter((mobile) => !brandFilter || mobile.brand === brandFilter)
             .filter(
@@ -81,14 +84,14 @@ function Landing() {
                 >
                   <Card>
                     <CardActionArea>
-                    <div className="image-background">
-                      <CardMedia
-                        component="img"
-                        alt={mobile.brand}
-                        height="200px"
-                        image={mobile.image}
-                        title={mobile.model}
-                      />
+                      <div className="image-background">
+                        <CardMedia
+                          component="img"
+                          alt={mobile.brand}
+                          height="200px"
+                          image={mobile.image}
+                          title={mobile.model}
+                        />
                       </div>
                       <CardContent>
                         <Typography gutterBottom variant="h6" component="div">
