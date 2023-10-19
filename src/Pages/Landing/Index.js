@@ -13,7 +13,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import "./Landing.css";
+import "./Index.css";
 
 function Landing() {
   const [mobiles, setMobiles] = useState([]);
@@ -21,7 +21,7 @@ function Landing() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/products")
+      .get("http://localhost:8080/api/products/mobile")
       .then((response) => setMobiles(response.data))
       .catch((error) => console.error(error));
   }, []);
@@ -62,6 +62,7 @@ function Landing() {
           >
             <ListItemText primary="Google" />
           </ListItem>
+          {/* Add more brand filter options as needed */}
         </List>
       </div>
       <div className="mobiles-list">
@@ -85,7 +86,7 @@ function Landing() {
                         component="img"
                         alt={mobile.brand}
                         height="200px"
-                        image={mobile.imageUrl}
+                        image={mobile.image}
                         title={mobile.model}
                       />
                       <CardContent>
@@ -100,11 +101,6 @@ function Landing() {
                         </Typography>
                       </CardContent>
                     </CardActionArea>
-                    {/* <CardActions>
-                      <Button size="small" color="primary">
-                        View More
-                      </Button>
-                    </CardActions> */}
                   </Card>
                 </Link>
               </ImageListItem>

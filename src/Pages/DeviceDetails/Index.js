@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import "./Description.css";
+import "./Index.css";
 
 const DeviceDetails = () => {
   const [selectedColor, setSelectedColor] = useState("");
@@ -74,7 +74,7 @@ const DeviceDetails = () => {
   }, [brand, model]);
 
   useEffect(() => {
-    const fetchWarehouses = async () => {
+    const Warehouses = async () => {
       try {
         const response = await fetch("http://localhost:8080/api/warehouses");
         if (!response.ok) {
@@ -87,7 +87,7 @@ const DeviceDetails = () => {
       }
     };
 
-    fetchWarehouses();
+    Warehouses();
   }, []);
 
   const calculateDistance = async (origin, destination) => {
@@ -98,7 +98,7 @@ const DeviceDetails = () => {
           method: "GET",
           headers: {
             "X-RapidAPI-Key":
-              "cab73d02famsh15196a44547fd1bp1824ffjsn3068e5d65a9c",
+              "01edcfd91bmsh3d4346bf53c4705p14554cjsn194823f82988",
             "X-RapidAPI-Host": "distanceto.p.rapidapi.com",
           },
         }
@@ -117,6 +117,7 @@ const DeviceDetails = () => {
       return null;
     }
   };
+
 
   const handleColorSelection = (color) => {
     const selectedVariant = data.find(

@@ -11,13 +11,11 @@ import {
   ImageListItem,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import './Accessories.css';
+import './Index.css';
 
 const Accessories = () => {
   const [accessories, setAccessories] = useState([]);
   const { brand } = useParams();
-  console.log(brand);
-  
 
   useEffect(() => {
     // Fetch accessory data from your API
@@ -41,29 +39,29 @@ const Accessories = () => {
       <ImageList cols={3} gap={16}>
         {filteredAccessories.map((accessory) => (
           <ImageListItem key={accessory.id}>
-            <Link to={`/accessories-description`}>
-            <Card>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  alt={accessory.name}
-                  height="140"
-                  image={accessory.image}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {accessory.brand}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {accessory.model}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Price: Rs.{accessory.price}
-                  </Typography>
-
-                </CardContent>
-              </CardActionArea>
-            </Card>
+            {/* Update the Link to include brand and model parameters */}
+            <Link to={`/accessories-description/${brand}/${accessory.model}`}>
+              <Card>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt={accessory.name}
+                    height="140"
+                    image={accessory.image}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                      {accessory.brand}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {accessory.model}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      Price: Rs.{accessory.price}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
             </Link>
           </ImageListItem>
         ))}
