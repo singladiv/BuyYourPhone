@@ -151,7 +151,7 @@ const AccessoriesDescription = () => {
 
       console.log("Shortest distance:", shortestDistance);
 
-      // Calculate expected delivery days based on the shortest distance
+      
       if (shortestDistance < 300) {
         calculatedDays = 2;
       } else if (shortestDistance < 500) {
@@ -167,7 +167,6 @@ const AccessoriesDescription = () => {
       console.error("Error calculating distances:", error);
     }
 
-    // Update the state with the calculated result
     setExpectedDays(calculatedDays);
 
     if (calculatedDays === 7) {
@@ -262,7 +261,6 @@ const AccessoriesDescription = () => {
                     color: "white",
                   },
                 }}
-                // className="nextButton"
                 href="/order-summary"
               >
                 ADD

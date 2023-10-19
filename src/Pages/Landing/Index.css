@@ -1,51 +1,56 @@
 
 .mobile-list-container {
-    display: flex;
-  }
-  
-  .sidebar {
-    width: 200px;
-    padding: 16px;
-    background-color: pink; /* Adjust the background color as needed */
-  }
-  
-  .filter-container .MuiList-root {
-    width: 100%;
-  }
-  
-  .mobiles-list {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 16px;
-    gap: 16px;
-    justify-content: center;
-  }
-  
-  .image-list-item {
-    width: 200px; /* Fixed width for Card */
-  }
-  
-  .image-list-item .MuiCard-root {
-    height: 300px; /* Fixed height for Card */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .image-list-item .MuiCardMedia-root {
-    height: 200px;
-  }
-  
-  .image-list-item .MuiCardContent-root {
-    padding: 8px;
-  }
-  
-  .image-list-item .MuiTypography-root {
-    margin-bottom: 5px;
-  }
-  
-  .image-list-item .MuiCardActions-root {
-    justify-content: flex-end;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+
+Typography {
+  color: white;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.horizontal-filter {
+  background-color: black;
+  color:white;
+  display: flex;
+  justify-content: space-between;
+  width: 400px; 
+}
+
+
+.horizontal-filter .Mui-selected {
+  background-color: #1976D2; 
+  color: white; 
+}
+
+.mobiles-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 16px;
+}
+
+.image-list-item {
+  margin: 0 8px 16px;
+}
+
+.card {
+  width: 300px;
+}
+
+.image-background img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}

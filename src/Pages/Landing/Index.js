@@ -32,8 +32,10 @@ function Landing() {
 
   return (
     <div className="mobile-list-container">
-      <div className="sidebar">
-        <List component="nav" aria-label="brand filter">
+
+
+      <div className="filter-container">
+        <List component="nav" aria-label="brand filter" className="horizontal-filter">
           <ListItem
             button
             onClick={() => handleFilter("")}
@@ -62,11 +64,11 @@ function Landing() {
           >
             <ListItemText primary="Google" />
           </ListItem>
-          {/* Add more brand filter options as needed */}
         </List>
       </div>
+
       <div className="mobiles-list">
-        <ImageList cols={3} gap={40}>
+        <ImageList cols={4} gap={40}>
           {mobiles
             .filter((mobile) => !brandFilter || mobile.brand === brandFilter)
             .filter(
@@ -76,19 +78,21 @@ function Landing() {
             .map((mobile) => (
               <ImageListItem key={mobile.id} className="image-list-item">
                 <Link
-                  to={`/device-details/${encodeURIComponent(
+                  to={`/device-details/${
                     mobile.brand
-                  )}/${encodeURIComponent(mobile.model)}`}
+                  }/${mobile.model}`}
                 >
                   <Card>
                     <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        alt={mobile.brand}
-                        height="200px"
-                        image={mobile.image}
-                        title={mobile.model}
-                      />
+                      <div className="image-background">
+                        <CardMedia
+                          component="img"
+                          alt={mobile.brand}
+                          height="200px"
+                          image={mobile.image}
+                          title={mobile.model}
+                        />
+                      </div>
                       <CardContent>
                         <Typography gutterBottom variant="h6" component="div">
                           {mobile.brand}

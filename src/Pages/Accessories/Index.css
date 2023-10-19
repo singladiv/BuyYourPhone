@@ -1,46 +1,87 @@
-/* Container for accessories */
 .accessories-container {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
 }
 
-/* Heading style */
 .accessories-heading {
   font-size: 24px;
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Style for each accessory item */
+.accessories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
 .accessory-card {
-  width: 300px;
-  margin: 10px;
-}
-
-/* Media (Image) style */
-.accessory-image {
-  height: 200px;
-  object-fit: cover;
-}
-
-/* Card content style */
-.accessory-content {
+  width: 250px;
+  height: 350px;
   text-align: center;
-}
+  background-color: #fff;
 
-/* Price text style */
-.accessory-price {
-  font-weight: bold;
-  color: #007BFF; /* Blue color */
-}
-
-/* Link style for accessory cards */
-.accessory-link {
-  text-decoration: none;
-  color: inherit; /* Inherit text color */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
 
-/* Add hover effect to accessory links */
-.accessory-link:hover {
-  transform: scale(1.05); /* Scale up on hover */
+.accessory-card img {
+  max-width: 75%;
+  max-height: 75%;
+  width: auto;
+  height: auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.accessory-content {
+  max-height: 120px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.accessory-price {
+  font-weight: bold;
+}
+
+.accessory-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.accessory-button {
+  background-color: pink;
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.accessory-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.accessory-skip-button:hover {
+  background-color: #999;
 }

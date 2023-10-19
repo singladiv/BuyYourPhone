@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
   Card,
@@ -11,14 +11,13 @@ import {
   ImageListItem,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import './Index.css';
+import './Index.css'; 
 
 const Accessories = () => {
   const [accessories, setAccessories] = useState([]);
   const { brand } = useParams();
 
   useEffect(() => {
-    // Fetch accessory data from your API
     const fetchAccessories = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/products/accessories');
@@ -34,38 +33,46 @@ const Accessories = () => {
   const filteredAccessories = accessories.filter((accessory) => accessory.brand === brand);
 
   return (
-    <div>
-      <h1>Accessories for {brand}</h1>
-      <ImageList cols={3} gap={16}>
-        {filteredAccessories.map((accessory) => (
-          <ImageListItem key={accessory.id}>
-            {/* Update the Link to include brand and model parameters */}
-            <Link to={`/accessories-description/${brand}/${accessory.model}`}>
-              <Card>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    alt={accessory.name}
-                    height="140"
-                    image={accessory.image}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h6" component="div">
-                      {accessory.brand}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {accessory.model}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      Price: Rs.{accessory.price}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Link>
-          </ImageListItem>
-        ))}
-      </ImageList>
+    <div className="accessories-container">
+      <h1 className="accessories-heading">Accessories for {brand}</h1>
+      <div className="accessories-list">
+        <ImageList cols={4} gap={16}>
+          {filteredAccessories.map((accessory) => (
+            <ImageListItem key={accessory.id}>
+              <Link to={`/accessories-description/${brand}/${accessory.model}`} className="accessory-link">
+                <Card className="accessory-card">
+                  <CardActionArea>
+                  <div className="image-container">
+                    <CardMedia
+                      component="img"
+                      alt={accessory.name}
+                      height="200"
+                      image={accessory.image}
+                    />
+                    </div>
+                    <CardContent>
+                      <Typography gutterBottom variant="h6" component="div">
+                        {accessory.brand}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {accessory.model}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        Price: <span className="accessory-price">Rs.{accessory.price}</span>
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Link>
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </div>
+      <div className="accessories-buttons">
+        <Link to="/order-summary" className="accessory-button">
+          Skip to Order Summary
+        </Link>
+      </div>
     </div>
   );
 };
