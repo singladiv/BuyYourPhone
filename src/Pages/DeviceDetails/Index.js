@@ -8,9 +8,22 @@ import {
   Grid,
   TextField,
   Typography,
+  createTheme,
+  ThemeProvider
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import "./Index.css";
+
+const theme = createTheme({
+  palette: {
+    pink: {
+      main: '#FFBFC5',
+      light: '#FFBFC5',
+      dark: '#FFBFC5',
+      contrastText: '#000000',
+    },
+  },
+});
 
 const DeviceDetails = () => {
   const [selectedColor, setSelectedColor] = useState("");
@@ -24,7 +37,7 @@ const DeviceDetails = () => {
   const [expectedDays, setExpectedDays] = useState(null);
 
   const [warehouses, setWarehouses] = useState([]);
-  const [pinCodeDistance, setPinCodeDistance] = useState({});
+ 
 
   const { brand, model } = useParams();
 
@@ -189,6 +202,9 @@ const DeviceDetails = () => {
 
     // Update the state with the calculated result
     setExpectedDays(calculatedDays);
+    if (calculatedDays === 7) {
+      setExpectedDays(null);
+    }
   };
 
   return (
@@ -281,21 +297,27 @@ const DeviceDetails = () => {
                   Expected Delivery: {expectedDays} days
                 </Typography>
               )}
-              {expectedDays === null && (
-                <Typography variant="h6" color="error">
-                  Product is out of stock.
-                </Typography>
-              )}
+              
             </Typography>
+            <ThemeProvider theme={theme}>
             <Button
               variant="contained"
-              color="primary"
-              className="nextButton"
+              color="pink"
+              size="large"
+              sx={{
+                ":hover": {
+                  bgcolor: "black",
+                  color: "white"
+                }
+              }}
+              // className="nextButton"
               component={Link}
               to={`/accessories/${brand}`}
             >
-              Next
+              NEXT
             </Button>
+            </ThemeProvider>
+            
           </CardContent>
         </Grid>
       </Grid>

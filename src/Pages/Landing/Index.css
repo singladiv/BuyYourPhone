@@ -38,11 +38,11 @@
   }
   
   .image-list-item .MuiCardContent-root {
-    padding: 16px;
+    padding: 8px;
   }
   
   .image-list-item .MuiTypography-root {
-    margin-bottom: 8px;
+    margin-bottom: 5px;
   }
   
   .image-list-item .MuiCardActions-root {

@@ -7,15 +7,27 @@ import {
   Grid,
   TextField,
   Typography,
+  createTheme,
+  ThemeProvider,
 } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./Index.css";
+
+const theme = createTheme({
+  palette: {
+    pink: {
+      main: "#FFBFC5",
+      light: "#FFBFC5",
+      dark: "#FFBFC5",
+      contrastText: "#000000",
+    },
+  },
+});
 
 const AccessoriesDescription = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [pinCode, setPinCode] = useState("");
   const [price, setPrice] = useState(null);
-  const [locationAvailability, setLocationAvailability] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [data, setData] = useState([]);
   const [colors, setColors] = useState([]);
@@ -33,7 +45,7 @@ const AccessoriesDescription = () => {
           method: "GET",
           headers: {
             "X-RapidAPI-Key":
-              "cab73d02famsh15196a44547fd1bp1824ffjsn3068e5d65a9c",
+              "01edcfd91bmsh3d4346bf53c4705p14554cjsn194823f82988",
             "X-RapidAPI-Host": "distanceto.p.rapidapi.com",
           },
         }
@@ -63,12 +75,12 @@ const AccessoriesDescription = () => {
           `http://localhost:8080/api/products/byBrandAndModel?brand=${brand}&model=${model}`
         );
         const jsonData = await response.json();
-  
+
         // Extract unique colors
         const uniqueColors = Array.from(
           new Set(jsonData.map((variant) => variant.color))
         );
-  
+
         // Set initial values based on the first variant
         const initialVariant = jsonData[0];
         setSelectedVariant(initialVariant);
@@ -80,7 +92,7 @@ const AccessoriesDescription = () => {
         console.error("Error fetching accessory data:", error);
       }
     };
-  
+
     const fetchWarehouses = async () => {
       try {
         const response = await fetch("http://localhost:8080/api/warehouses");
@@ -93,12 +105,11 @@ const AccessoriesDescription = () => {
         console.error("Error fetching warehouses:", error);
       }
     };
-  
+
     // Call both fetch functions
     fetchAccessoryData();
     fetchWarehouses();
   }, [brand, model]);
-  
 
   const handleColorSelection = (color) => {
     const selectedVariant = data.find((variant) => variant.color === color);
@@ -112,34 +123,34 @@ const AccessoriesDescription = () => {
 
   const handlePinCodeCheck = async () => {
     const enteredPinCode = pinCode;
-  
+
     if (warehouses.length === 0) {
       // If there are no warehouses, show that the product is out of stock
       console.log("Product is out of stock because there are no warehouses.");
       setExpectedDays(null);
       return;
     }
-  
+
     let shortestDistance = Infinity;
     let calculatedDays = 7; // Default value if no warehouses are available
-  
+
     // Set loading state while calculating distances
     setExpectedDays("loading");
-  
+
     try {
       for (const warehouse of warehouses) {
         const distance = await calculateDistance(
           enteredPinCode,
           warehouse.location
         );
-  
+
         if (distance !== null && distance < shortestDistance) {
           shortestDistance = distance;
         }
       }
-  
+
       console.log("Shortest distance:", shortestDistance);
-  
+
       // Calculate expected delivery days based on the shortest distance
       if (shortestDistance < 300) {
         calculatedDays = 2;
@@ -150,16 +161,19 @@ const AccessoriesDescription = () => {
       } else if (shortestDistance < 11000) {
         calculatedDays = 5;
       }
-  
+
       console.log("Calculated days:", calculatedDays);
     } catch (error) {
       console.error("Error calculating distances:", error);
     }
-  
+
     // Update the state with the calculated result
     setExpectedDays(calculatedDays);
+
+    if (calculatedDays === 7) {
+      setExpectedDays(null);
+    }
   };
-  
 
   return (
     <Card className="accessoriesCardContainer">
@@ -202,7 +216,11 @@ const AccessoriesDescription = () => {
             </Typography>
 
             {price != null && (
-              <Typography variant="h5" component="div" className="accessoriesPriceSection">
+              <Typography
+                variant="h5"
+                component="div"
+                className="accessoriesPriceSection"
+              >
                 Price: ${price}
               </Typography>
             )}
@@ -232,20 +250,24 @@ const AccessoriesDescription = () => {
                   Expected Delivery: {expectedDays} days
                 </Typography>
               )}
-              {expectedDays === null && (
-                <Typography variant="h6" color="error">
-                  Product is out of stock.
-                </Typography>
-              )}
             </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              className="nextButton"
-              href="/order-summary"
-            >
-              Next
-            </Button>
+            <ThemeProvider theme={theme}>
+              <Button
+                variant="contained"
+                color="pink"
+                size="large"
+                sx={{
+                  ":hover": {
+                    bgcolor: "black",
+                    color: "white",
+                  },
+                }}
+                // className="nextButton"
+                href="/order-summary"
+              >
+                ADD
+              </Button>
+            </ThemeProvider>
           </CardContent>
         </Grid>
       </Grid>
